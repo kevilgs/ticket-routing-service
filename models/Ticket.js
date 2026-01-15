@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const ticketSchema = new mongoose.Schema({
     ticketID : {type:String,required:true,unique:true},
     summary: String,
-    priority: String,
-    urgency: String,
+    priority: {type:String,index:true},
+    urgency: {type:String,index:true},
     assignedTo: String,
     region: String,
     deadline: Date,

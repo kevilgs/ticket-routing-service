@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
-
+import { configDotenv } from "dotenv";
+import logger from "../utils/logger.js";
+configDotenv();
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect('mongodb://127.0.0.1:27017/ticket-system');
-        console.log(`Success: ${conn.connection.host}`)
+        const conn = await mongoose.connect(process.env.MONGO_URI);
+        logger.info(`Success: ${conn.connection.host}`)
     } catch (error) {
-        console.log(`Error: ${error.message}`)
-        process.exit();
+        logger.info(`Error: ${error.message}`)
+        processs.exit(1);
     }
 }
 

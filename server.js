@@ -16,16 +16,15 @@ const limiter = rateLimit({
     legacyHeaders:false,
     message:"Too many tickets"
 });
-app.use(limiter);
+// app.use(limiter);
 connectDB();
 app.use(json());
 app.post("/webhook",async(req,res)=>{
-    logger.info("Raw data recieved")
     try {
 
         const {error} = ticketSchema.validate(req.body);
         if(error){
-            logger.info("Blocked Invalid Request:", error.details[0].message);
+            logger.error("Blocked Invalid Request:", error.details[0].message);
             return res.status(400).send({ error: error.details[0].message });
         }
     
@@ -46,7 +45,7 @@ app.post("/webhook",async(req,res)=>{
         res.status(500).send('error');
     }
     } catch (error) {
-        logger.info("Error processing ticket:", error);
+        logger.error("Error processing ticket:", error);
         return res.status(500).send({ error: 'Internal server error' });
     }
 });

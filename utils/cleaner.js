@@ -1,3 +1,8 @@
+const FIELD_MAP ={
+    REGION: 'customfield_10029'
+};
+
+
 const cleanTicket = (payload) =>{
     //remeber to add if paylod doesnt exists
     //example json structre
@@ -18,7 +23,7 @@ const cleanTicket = (payload) =>{
         summary: fields.summary,
         priority: fields.priority.name,
         assignedTo : fields.assignee ? fields.assignee.emailAddress : "Unassigned",
-        region : fields.customfield_10029 || "unknown"
+        region : fields[FIELD_MAP.REGION] || "unknown"
     }
 }
 
