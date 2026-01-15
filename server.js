@@ -6,8 +6,9 @@ import Ticket from './models/Ticket.js';
 import ticketSchema from './utils/validationSchema.js';
 import rateLimit from 'express-rate-limit';
 import logger from './utils/logger.js';
+import 'dotenv/config';
 
-
+const PORT = process.env.PORT || 3000;
 const app = express();
 const limiter = rateLimit({
     windowMs:1*60*1000,
@@ -80,6 +81,6 @@ app.get('/tickets',async(req,res)=>{
     }
 });
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
     logger.info("server running on port 3000");
 });
