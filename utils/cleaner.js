@@ -17,7 +17,7 @@ const cleanTicket = (payload) =>{
         ticketID : payload.issue.key,
         summary: fields.summary,
         priority: fields.priority.name,
-        assignedTo : fields.assigne ? fields.assigne.emailAddress : "Unassigned",
+        assignedTo : fields.assignee ? fields.assignee.emailAddress : "Unassigned",
         region : fields.customfield_10029 || "unknown"
     }
 }
