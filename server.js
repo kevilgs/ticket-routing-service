@@ -21,11 +21,23 @@ const flushBuffer = async () => {
 
     // console.log(`Flushing ${bufferToSave.length} tickets to MongoDB...`);
 
+    const operations = bufferToSave.map(ticket => ({
+        updateOne: {
+            filter: { ticketID: ticket.ticketID },
+            update: { 
+                $set: ticket,
+                $setOnInsert: { __v: 0 }, 
+                $inc: { __v: 1 }          
+            },
+            upsert: true
+        }
+    }));
+
     try {
-        await Ticket.insertMany(bufferToSave, { ordered: false });
-        console.log(`Successfully saved ${bufferToSave.length} tickets.`);
+        await Ticket.bulkWrite(operations, { ordered: false });
+        console.log(`Successfully processed ${bufferToSave.length} tickets.`);
     } catch (err) {
-        console.error("Bulk Insert Error:", err.message);
+        console.error("Bulk Write Error:", err.message);
     }
 };
 
